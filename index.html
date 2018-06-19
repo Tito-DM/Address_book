@@ -6,12 +6,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="src/css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>Address book</title>
 </head>
 ​
 
 <body>
+
+  <div class="container">
+
+    <div class="row">
+        <h1>Contacts</h1>
+      <!-- add the following markup -->
+    
+    
+      ​
+      <form action="#" class="new-contact-form">
+        <div class="input-field">
+        <label for="name">Name</label>
+        <input id="contact-name" name="name" type="text">
+        </div>
+       
+        <div class="input-field">
+        <label for="email">Email</label>
+        <input id="contact-email" name="email" type="email">
+        </div>
+        
+        <div class="input-field">
+        <label for="phone">Phone</label>
+        <input id="contact-phone" name="phone" type="text">
+        </div>
+
+        <div class="input-field">
+        <label for="company">Company</label>
+        <input id="contact-company" name="company" type="text">
+        </div>
+
+        <div class="input-field">
+        <label for="notes">Notes</label>
+        <textarea id="contact-notes" name="notes" class="materialize-textarea" type="text"></textarea>
+        </div>
+
+        <div class="input-field">
+        <label for="twitter">Twitter</label>
+        <input id="contact-twitter" name="twitter" type="text">
+        </div>
+
+        <form action="#">
+          <!-- ... -->
+          ​
+          <input class="save-contact btn " type="submit" value="Save contact">
+          <button class="add-contact btn">Add Contact</button>
+        </form>
+
+        <div class="contact-list row">
+        </div>
+    </div>
+
+ 
+  </div>
+
+  </div>
+
+   
+
+
+
+
   <script src="./dist/bundle.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="src/js/materialize.min.js"></script>
+  
+
 </body>
 ​
 
