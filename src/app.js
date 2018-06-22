@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
    renderContacts();
@@ -27,26 +29,26 @@ const addContactForm = document.querySelector('.new-contact-form')
       notes: notes.value,
       twitter: twitter.value,
     }
-    console.log(`Saving the following contact: ${JSON.stringify(contact)}`)
+      console.log(`Saving the following contact: ${JSON.stringify(contact)}`)
 
-    storeTaskInLocalStorage(contact)
+      storeContactInLocalStorage(contact)
   })
 
 })
 
-function storeTaskInLocalStorage(concats) {
+function storeContactInLocalStorage(contact) {
 
-  let tasks;
+  let contacts;
 
-  if (localStorage.getItem('concats') === null) {
-    tasks = [];
+  if (localStorage.getItem('contacts') === null) {
+    contacts = [];
   } else {
-    tasks = JSON.parse(localStorage.getItem('concats'));
+    contacts = JSON.parse(localStorage.getItem('contacts'));
   }
 
-  tasks.push(concats);
+  contacts.push(contact);
 
-  localStorage.setItem('concats', JSON.stringify(tasks));
+  localStorage.setItem('contacts', JSON.stringify(contacts));
   renderContacts();
 }
 
@@ -61,13 +63,13 @@ const renderContacts = () =>{
 
   let div = document.querySelector('.contact-list')
 
-  let tasks;
+  let contacts;
 
-  if (localStorage.getItem('concats') === null) {
-    tasks = [];
+  if (localStorage.getItem('contacts') === null) {
+    contacts = [];
      div.innerHTML = '<p>You have no contacts in your address book</p>'
   } else {
-    tasks = JSON.parse(localStorage.getItem('concats'));
+    contacts = JSON.parse(localStorage.getItem('contacts'));
     div.innerHTML = '';
 
  
@@ -75,7 +77,7 @@ const renderContacts = () =>{
     // create a li element that will contain a card with
     // all the information of the contact
 
-    tasks.forEach(contact => {
+    contacts.forEach(contact => {
       let card = document.createElement('div')
       card.className = 'col s12 m4'
       card.innerHTML = `
@@ -89,19 +91,14 @@ const renderContacts = () =>{
       <h2>${ contact.company }</h2> 
       ${ contact.email } | 
       <a href="https://www.twitter.com/${ contact.twitter}">@${contact.twitter}</a> 
-      
         <a href="#" class="delete" > <i class = "material-icons " > delete </i></a >
-        <a href="#" class="edit" > <i class = "material-icons edit" > edit </i></a >
+         <a class=" modal-trigger" href="#modal1"><i class = "material-icons " > edit </i></a>
         </div> 
         </div>
-      
       `
-
       // add the contacts to ul we create
          div.appendChild(card);
     })
-
-    //lastly append the ul to div
  
   }
 
@@ -115,43 +112,49 @@ document.querySelector('.contact-list').addEventListener('click', removeContact)
 //remove contact
 
 function removeContact(e){
+ 
 
 if (e.target.parentElement.classList.contains('delete')) {
-     console.log(e.target, "delete");
+    
      e.target.parentElement.parentElement.parentElement.remove();
-     removeTaskFromLoacalStorage(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
+     
+    
+     removecontactFromLoacalStorage(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
+    
+    
 }
 
-if (e.target.parentElement.classList.contains('edit')){
-   console.log(e.target, "edit");
-   
-}
+
+
+
 
 e.preventDefault();
 
 }
 
 //remove from local storage
-function removeTaskFromLoacalStorage(taskItem) {
-  let tasks;
-   console.log(taskItem)
-  if (localStorage.getItem('concats') === null) {
-    tasks = [];
+function removecontactFromLoacalStorage(contactList) {
+  let contacts;
+  
+  if (localStorage.getItem('contacts') === null) {
+    contacts = [];
   } else {
-    tasks = JSON.parse(localStorage.getItem('concats'));
+    contacts = JSON.parse(localStorage.getItem('contacts'));
   }
 
-  tasks.forEach(function (task, index) {
-    console.log(task.company, taskItem)
+  contacts.forEach(function (contact, index) {
+    console.log(contact.company, contactList)
 
-    if (task.company === taskItem) {
-      tasks.splice(index, 1);
+    if (contact.company === contactList) {
+      contacts.splice(index, 1);
+        
     }
 
-    localStorage.setItem('concats', JSON.stringify(tasks))
+    localStorage.setItem('contacts', JSON.stringify(contacts))
 
   })
 
 }
+
 
 
