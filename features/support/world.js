@@ -23,7 +23,6 @@ class AddressBookWorld {
   async pageHasTextContent(expectedContent){
     const pageContent = await this.page.content()
     const actualContent = pageContent.match(expectedContent)[0]
-    
     expect(actualContent).to.be.eq(expectedContent)
   }
 
@@ -60,6 +59,28 @@ class AddressBookWorld {
       () => JSON.parse(window.localStorage.getItem('contacts')).length
     )
     expect(actualCount).to.be.eq(expectedCount)
+  }
+
+    async pageDoesNotHaveTextContent(unexpectedContent) {
+      const pageContent = await this.page.content()
+      let actualContent = pageContent.match(unexpectedContent)
+
+      expect(actualContent).to.be.eq(null)
+    }
+
+    async clickOndeleteContactBtn(btnName) {
+      const btnSelector = this.btnSelectorFromName(btnName.toLowerCase())
+      await this.page.waitForSelector(btnSelector)
+      await this.page.click(btnSelector)
+    }
+
+    async removefromlocalstorage(expectedCount) {
+        const contacts = await this.page.evaluate(
+          () => JSON.parse(window.localStorage.getItem('contacts'))
+        )
+        
+      
+       expect(contacts.length).to.be.eq(expectedCount)
   }
 }
 

@@ -1,5 +1,6 @@
 const { After, Given, Then, When } = require('cucumber')
 
+
 Given('I visit the site', async function () {
   return await this.openHomePage()
 })
@@ -13,14 +14,8 @@ When('I click {string', async function(string){
 Then('I fill in {string} with {string}', async function (field, content) {
   return await this.fillFormField(field.toLowerCase(), content)
 })
-Then('I should have {int} concat in my address book', async function(int){
-//Write code here that turns the phrase above concrete actions
-return 'pending'
-})
-Then('I should not see {string}', async function(string){
-  //Write code here that turns the phrase above concrete actions
-  return 'pending'
-  
+Then('I should not see {string}', async function (content) {
+  return await this.pageDoesNotHaveTextContent(content)
 })
 
 After(async function(){
@@ -32,10 +27,13 @@ When('I click {string}', async function (string) {
   return await this.clickOnAddContactBtn('add contact')
   
 })
-
-Then('I should have {int} contact in my address book', async function(contactCount) {
-
-  return await this.checkContactStorageCount(contactCount);
-  
+Then('I should have {int} contact in my address book', async function(int){
+  return await this.checkContactStorageCount(int)
 })
+
+When(' I click {string}', async function (string) {
+  return await this.clickOndeleteContactBtn('delete contac')
+  })
+
+
 
