@@ -16,7 +16,7 @@ Feature: Create contacts
 		And I fill in "Notes" with "A really awsome guy :-)"
 		And I fill in "Twitter" with "johndoe"
 		And I click "Save contact"
-		Then I should have 1 contact in my address book
+		Then 	Then I should have 1 contact in my address book
 		And I should see "John Doe"
 		When I click "Add contact"
 		Then I fill in "Name" with "Jane Doe"
@@ -30,7 +30,9 @@ Feature: Create contacts
 		And I should see "Jane Doe"
 		And I should see "John Doe"
 		And I should not see "You have no contacts in your address book"
+		Then I should have 1 contact in my address book
+		Given I want to Delete a contact
+		When I click "delete"
+		
 
 	
-
-

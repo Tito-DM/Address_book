@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-​
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,34 +7,46 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="src/css/materialize.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="src/css/main.css" rel="stylesheet">
   <title>Address book</title>
+  
 </head>
+
+<body style="background-color: whitesmoke">
 ​
 
-<body>
+
 
   <div class="container">
+      <nav class="black">
+        <div class="nav-wrapper ">
+          <div class="container"></div>
+          <a href="#" class="brand-logo  left">
+            <i class="material-icons size heading amber-text">contact_phone</i>
+          </a>
+          <h4 class="center heading amber-text">Contacts</h3>
+        </div>
+        </nav
 
     <div class="row">
-        <h1>Contacts</h1>
-      <!-- add the following markup -->
-    
-    
-      ​
+      ​<div class="card-panel">
       <form action="#" class="new-contact-form">
         <div class="input-field">
-        <label for="name">Name</label>
+       
         <input id="contact-name" name="name" type="text">
+        <p class="message-erro" id="name-erro">invalid name cannot be empty or contain number</p>
+        <label  for="name">Name</label>
         </div>
        
         <div class="input-field">
-        <label for="email">Email</label>
-        <input id="contact-email" name="email" type="email">
+        <input id="contact-email" name="email" type="email" class="validate">
+        <label for="email" data-error="invalid">Email</label>
         </div>
         
         <div class="input-field">
         <label for="phone">Phone</label>
         <input id="contact-phone" name="phone" type="text">
+            <p class="message-erro" id="phone-erro">invalid phone number cannot be empty or contain letter but can start with &plus;</p>
         </div>
 
         <div class="input-field">
@@ -57,11 +67,13 @@
         <form action="#">
           <!-- ... -->
           ​
-          <input class="save-contact btn " type="submit" value="Save contact">
-          <button class="add-contact btn">Add Contact</button>
+          <input class="save-contact btn green waves-effect  " type="submit" value="Save">
+          <button class="add-contact btn red waves-effect btn-delete-all">Delete all</button>
+          
         </form>
      
-
+           <p  id="exist-contact">This contact is already add</p>
+         
         <div class="contact-list row">
          
         </div>
@@ -116,6 +128,7 @@
     <div class="modal-footer" >
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat makechange">Make change</a>
     </div>
+  </div>
   </div>
    
   <script src="./dist/bundle.js"></script>

@@ -46,8 +46,9 @@ class AddressBookWorld {
             return '.add-contact';
         break;
       case 'save contact':
-      return '.save-contact';
-      break;
+            return '.save-contact';
+        break;
+  
       default:
 
       throw `${btnName} button is not define`
@@ -78,9 +79,18 @@ class AddressBookWorld {
         const contacts = await this.page.evaluate(
           () => JSON.parse(window.localStorage.getItem('contacts'))
         )
-        
-      
        expect(contacts.length).to.be.eq(expectedCount)
+  }
+
+  async selectContact(){
+
+  }
+  async DeleteContactBtn(expectedCount){
+      const contacts = await this.page.evaluate(
+        () => JSON.parse(window.localStorage.getItem('contacts'))
+      )
+  
+      expect(contacts.length).to.be.eq(expectedCount)
   }
 }
 

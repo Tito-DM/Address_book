@@ -1,0 +1,21 @@
+.heading {
+  line-height: 4rem !important;
+ 
+}
+
+.message-erro{
+  margin-top: -1rem;
+  color: rgb(187, 33, 33);
+}
+
+#exist-contact{
+  color: rgb(187, 33, 33);
+  font-size: 1rem;
+}
+
+.size{
+  font-size: 45px !important;
+  margin-left: 10px;
+}
+
+

@@ -1,10 +1,14 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
+ //hide error message
+  document.getElementById('name-erro').style.display = 'none'
+  document.getElementById('phone-erro').style.display = 'none'
+  document.getElementById('exist-contact').style.display = 'none'
 
   renderContacts();
 
-
+  
 
   // Select form object from the DOM
   const addContactForm = document.querySelector('.new-contact-form')
@@ -32,17 +36,54 @@ document.addEventListener('DOMContentLoaded', () => {
       notes: notes.value,
       twitter: twitter.value,
     }
-    console.log(`Saving the following contact: ${JSON.stringify(contact)}`)
-  
-    if(name.value === ''){
-      //display something
-    }else if (email.value === ''){
-      contact.email = email.value;
-    }else if(phone.value === ''){
-      contact.phone = phone.value;
-    }else{
-    storeContactInLocalStorage(contact)
+
+
+    //regular exp 
+    const name_exp = /^([a-zA-Z]+\s?)([a-zA-Z]+\s?)?([a-zA-Z]+\s?)?$/;
+    const phone_exp = /^\+?[0-9]+$/;
+
+    //check if contact already exist
+    let check_contacts;
+
+    if (localStorage.getItem('contacts') === null) {
+      check_contacts = [];
+    } else {
+      check_contacts = JSON.parse(localStorage.getItem('contacts'));
     }
+
+    //check variable
+
+    let check ;
+
+    check_contacts.forEach(function (contact) {
+      if (contact.name === name.value && contact.email == email.value &&contact.phone == phone.value) {
+            check = 'exist' //if finds a contact
+      }
+
+    })
+        
+        if (name.value === '' || !name_exp.test(name.value)) {
+          document.getElementById('contact-name').style.borderBottom= '2px solid red '
+          document.getElementById('name-erro').style.display = 'block'
+        } else if (email.value === '') {
+          //display something
+        } else if (phone.value === '' || !phone_exp.test(phone.value)) {
+          document.getElementById('contact-phone').style.borderBottom = '2px solid red '
+          document.getElementById('phone-erro').style.display = 'block'
+        } else if (check === 'exist'){
+          setTimeout(() => {
+               document.getElementById('exist-contact').style.display = 'block'
+          }, 1000);
+      
+        }else {
+          document.getElementById('contact-name').style.borderBottom = '1px solid gray'
+          document.getElementById('name-erro').style.display = 'none'
+          document.getElementById('contact-phone').style.borderBottom = '1px solid gray '
+          document.getElementById('phone-erro').style.display = 'none'
+          storeContactInLocalStorage(contact)
+          addContactForm.reset();
+        }
+   
    
   })
 
@@ -91,7 +132,7 @@ const renderContacts = () => {
 
     contacts.forEach(contact => {
       let card = document.createElement('div')
-      card.className = 'col s12 m4'
+      card.className = 'col s12 m5'
       card.innerHTML = `
         <div class = "card" >
         <div class = "card-image">
@@ -100,12 +141,15 @@ const renderContacts = () => {
         <div class = "card-content">
        <span class = "card-title"> ${contact.name}</span> 
           <p>${ contact.notes}</p> 
-      <h2>${ contact.company}</h2> 
+      <h3>${ contact.company}</h3> 
+        <h6> Phone  n&deg;: ${contact.phone}</h6> 
        <h6 id ='id' style = 'display:none'>${ contact.id}</h6> 
       ${ contact.email} | 
-      <a href="https://www.twitter.com/${ contact.twitter}">@${contact.twitter}</a> 
-        <a href="#" class="delete" > <i class = "material-icons " > delete </i></a >
-         <a class=" modal-trigger edit" href="#modal1"><i class = "material-icons " > edit </i></a>
+      <a href="https://www.twitter.com/${ contact.twitter}">@${contact.twitter}</a>
+      <br>
+       <br>
+        <a href="#" class="delete red-text" > <i class = "material-icons " > delete </i></a >
+         <a class=" modal-trigger edit" href="#modal1"><i class = "material-icons"> edit </i></a>
         </div> 
         </div>
       `
@@ -136,11 +180,11 @@ function removeContact(e) {
   if (e.target.parentElement.classList.contains('delete')) {
 
     e.target.parentElement.parentElement.parentElement.remove();
-    removecontactFromLoacalStorage(e.target.parentElement.previousElementSibling.previousElementSibling.textContent)
+    removecontactFromLoacalStorage(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent)
   }
 
   if (e.target.parentElement.classList.contains('edit')) {   
-    target = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+    target = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
   }
 
   e.preventDefault();
@@ -216,8 +260,16 @@ function makechange(){
       }
     }
     localStorage.setItem('contacts', JSON.stringify(contacts))
+
   })
 }
 document.querySelector('.makechange').addEventListener('click', makechange)
+
+//delete al contacts
+
+document.querySelector('.btn-delete-all').addEventListener('click',()=>{
+  //clear local storage
+  localStorage.clear();
+})
 
 
